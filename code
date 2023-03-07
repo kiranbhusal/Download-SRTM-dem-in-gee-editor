@@ -1,0 +1,20 @@
+var roi = Table users/kiranbhusalgeo/gandakiprovince
+var dem = Image "SRTM Digital Elevation Data Version 4"
+
+
+var data = dem.clip(roi)
+var slope = ee.Terrain.slope(data)
+
+var hillshade = ee.Terrain.hillshade(data, 135, 48)
+var aspect = ee.Terrain.aspect(data)
+
+Map.centerObject(roi,8)
+Map.addLayer(data)
+
+Export.image.toDrive({ 
+  image: classifiedImage,
+  description: 'DEM_from_SRTM',
+  folder : 'kiran',
+  scale: 10, 
+  maxPixels: 1e13, 
+  region: roi 
