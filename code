@@ -3,16 +3,23 @@ var dem = Image "SRTM Digital Elevation Data Version 4"
 
 
 var data = dem.clip(roi)
+
+//calculate slope of terrain
 var slope = ee.Terrain.slope(data)
 
+// calculate hillshade
 var hillshade = ee.Terrain.hillshade(data, 135, 48)
+
+//calculate aspect
 var aspect = ee.Terrain.aspect(data)
 
 Map.centerObject(roi,8)
+
+//add layer that you want to visualize in gee editor
 Map.addLayer(data)
 
 Export.image.toDrive({ 
-  image: classifiedImage,
+  image: data,
   description: 'DEM_from_SRTM',
   folder : 'kiran',
   scale: 10, 
